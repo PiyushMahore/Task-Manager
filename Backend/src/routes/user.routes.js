@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { changeUserDetails, getCurrentUser, login, logOut, signUp } from '../controllers/user.controllers.js';
+import { changeUserDetails, getCurrentUser, login, logOut, signUp } from '../controllers/user.controller.js';
 import { varifyJwt } from '../middlewares/verifyJwt.middleware.js';
 
 export const userRoute = Router();
