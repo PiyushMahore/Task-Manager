@@ -27,7 +27,7 @@ const generateAccessRefreshToken = async (_id) => {
 }
 
 const signUp = asyncHandler(async (req, res) => {
-    const { firstName, lastName, userName, email, password } = req.body
+    const { firstName, lastName, userName, email, password } = req.body;
 
     if ([firstName, lastName, userName, email, password].some((value) => value?.trim() === "")) {
         throw new apiError(400, "All Fields Are Required")
@@ -54,4 +54,32 @@ const signUp = asyncHandler(async (req, res) => {
         .json(new apiResponse(200, user, "User Created SuccessFully"))
 })
 
-export { signUp }
+const login = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    if (email?.trim() === "" || password?.trim() === "") {
+        throw new apiError(400, "Invalid Crediantials");
+    }
+
+    const user = await User.findOne({ email: email })
+
+    if (!user) {
+        throw new apiError(404, "User Not Found")
+    }
+
+    const checkPassword = await user.changePassword(password)
+
+    if (checkPassword === false) {
+        throw new apiError(400, "Incorrect Password")
+    }
+
+    const { accessToken, refreshToken } = await generateAccessRefreshToken(user._id)
+
+    return res
+        .status(200)
+        .cookie("refreshToken", refreshToken, cookieOptions)
+        .cookie("accessToken", accessToken, cookieOptions)
+        .json(new apiResponse(200, user, "User Logged In Successfully"))
+})
+
+export { signUp, login }
