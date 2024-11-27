@@ -124,4 +124,32 @@ const changeUserDetails = asyncHandler(async (req, res) => {
         .json(new apiResponse(200, user, "User Updated Successfully"));
 });
 
-export { signUp, login, changeUserDetails };
+const logOut = asyncHandler(async (req, res) => {
+    await User.findByIdAndUpdate(req.user._id, {
+        $unset: {
+            refreshToken: 1
+        }
+    }, {
+        new: true
+    })
+
+    return res
+        .status(200)
+        .clearCookie("refreshToken", cookieOptions)
+        .clearCookie("accessToken", cookieOptions)
+        .json(new apiResponse(200, [], "User Log Out Successfully"))
+})
+
+const getCurrentUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+
+    if (!user) {
+        throw new apiError(404, "User Not Found");
+    }
+
+    return res
+        .status(200)
+        .json(new apiResponse(200, user, "User Fetched Successfully"))
+})
+
+export { signUp, login, changeUserDetails, logOut, getCurrentUser };
