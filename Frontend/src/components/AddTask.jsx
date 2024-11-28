@@ -3,7 +3,7 @@ import React from 'react'
 function AddTask({ setForm }) {
 
     return (
-        <div className='h-[200px] w-[500px] absolute top-0 bottom-0 left-1/2 right-1/2 bg-[#ffffff] -translate-x-40 translate-y-28 rounded shadow-xl shadow-gray-500 border border-gray-400 px-1 py-3'>
+        <div className='h-[200px] lg:w-[500px] w-[300px] absolute top-1/2 left-1/2 bg-[#ffffff] lg:translate-x-2/3 -translate-x-1/3 -translate-y-1/2 rounded shadow-xl shadow-gray-500 border border-gray-400 px-1 py-3'>
             <div className='flex flex-col gap-3'>
                 <div className='text-xl w-full'>
                     <input className='w-full focus:outline-none px-2' type="text" name="title" placeholder='Task Name' />

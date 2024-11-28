@@ -4,7 +4,7 @@ import { RiEditLine } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
 import DeleteTask from '../components/DeleteTask';
 
-function Inbox() {
+function Today() {
     const [deleteTask, setDeleteTask] = useState(false)
 
     const handleDeleteForm = () => {
@@ -45,4 +45,4 @@ function Inbox() {
     )
 }
 
-export default Inbox
+export default Today

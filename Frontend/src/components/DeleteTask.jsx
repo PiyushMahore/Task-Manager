@@ -2,7 +2,7 @@ import React from 'react'
 
 function DeleteTask({ setForm }) {
     return (
-        <div className='h-[130px] w-[450px] absolute top-0 bottom-0 left-1/2 right-1/2 bg-[#ffffff] -translate-x-40 translate-y-28 rounded-lg shadow-xl shadow-gray-500 border border-gray-400 px-4 py-3'>
+        <div className='h-[130px] lg:w-[450px] w-[350px] absolute top-1/2 left-1/2 bg-[#ffffff] lg:-translate-x-1/2 -translate-x-[50%] -translate-y-1/2 rounded-lg shadow-xl shadow-gray-500 border border-gray-400 px-4 py-3'>
             <div className='grid gap-1'>
                 <h5>Delete Task?</h5>
                 <p>The <span className='font-semibold'>HHH</span> task will be permanently deleted.</p>
