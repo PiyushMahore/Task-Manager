@@ -9,6 +9,7 @@ function Inbox() {
     const useContext = useTask()
     const [deleteTask, setDeleteTask] = useState(false)
     const [deleteTaskId, setDeleteTaskId] = useState("")
+    const [deleteTaskName, setDeleteTaskName] = useState("")
 
     useEffect(() => {
         const getAllTask = async () => {
@@ -17,9 +18,10 @@ function Inbox() {
         getAllTask()
     }, [useContext.tasks])
 
-    const handleDeleteForm = (taskId) => {
+    const handleDeleteForm = (taskId, taskName) => {
         setDeleteTask(!deleteTask)
         setDeleteTaskId(taskId)
+        setDeleteTaskName(taskName)
     }
 
     const toggleTaskStatus = async (taskId) => {
@@ -54,7 +56,7 @@ function Inbox() {
                             </div>
                             <div className='flex gap-2'>
                                 <button><RiEditLine color='gray' size={20} /></button>
-                                <button onClick={() => handleDeleteForm(task._id)}><MdDeleteOutline color='red' size={20} /></button>
+                                <button onClick={() => handleDeleteForm(task._id, task.title)}><MdDeleteOutline color='red' size={20} /></button>
                             </div>
                         </div>
                         <div className='mt-2'>
@@ -64,7 +66,7 @@ function Inbox() {
                 ))
             }
 
-            {deleteTask ? <DeleteTask setForm={setDeleteTask} taskId={deleteTaskId} /> : null}
+            {deleteTask ? <DeleteTask setForm={setDeleteTask} taskId={deleteTaskId} taskName={deleteTaskName} /> : null}
         </div >
     )
 }

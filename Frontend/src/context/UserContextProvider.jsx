@@ -34,6 +34,8 @@ const UserContextProvider = ({ children }) => {
             const result = await axios.post('http://localhost:8000/api/user/login', {
                 email: email,
                 password: password
+            }, {
+                withCredentials: true
             });
             return result.data
         } catch (error) {

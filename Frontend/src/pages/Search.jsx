@@ -5,21 +5,22 @@ import { MdDeleteOutline } from "react-icons/md";
 import DeleteTask from '../components/DeleteTask';
 import { useTask } from '../context/TaskContextProvider';
 
-function Today() {
+function Search() {
     const useContext = useTask()
     const [deleteTask, setDeleteTask] = useState(false)
     const [deleteTaskId, setDeleteTaskId] = useState("")
-    const [todaysTasks, setTodaysTasks] = useState([])
+    const [searchTasks, setSearchTasks] = useState([])
     const [deleteTaskName, setDeleteTaskName] = useState("")
+    const [searchInput, setSearchInput] = useState("")
 
     useEffect(() => {
         const getAllTask = async () => {
             const tasks = await useContext.getAllTasks();
-            const filteredTasks = tasks.data.filter((task) => `${new Date(task.dueDate).getDate()} ${new Date(task.dueDate).getFullYear()} ${new Date(task.dueDate).getMonth()}` === `${new Date().getDate()} ${new Date().getFullYear()} ${new Date().getMonth()}`)
-            setTodaysTasks(filteredTasks)
+            const filteredTasks = tasks.data.filter((task) => task.title.includes(searchInput))
+            setSearchTasks(filteredTasks)
         }
         getAllTask()
-    }, [useContext.tasks])
+    }, [searchInput, useContext.tasks])
 
     const handleDeleteForm = (taskId, taskName) => {
         setDeleteTask(!deleteTask)
@@ -35,11 +36,19 @@ function Today() {
     return (
         <div className='w-full h-full px-1 lg:px-[15%] py-[5%]'>
             <h1 className='text-3xl font-bold'>
-                Today
+                Search
             </h1>
-
+            <div class="max-w-md mx-auto mt-10">
+                <input
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    type="search"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-gray-400"
+                    placeholder="Search..."
+                />
+            </div>
             {
-                todaysTasks && todaysTasks.map((task) => (
+                searchTasks && searchTasks.map((task) => (
                     <span key={task._id}>
                         <div className='flex justify-between items-center'>
                             <div>
@@ -71,4 +80,4 @@ function Today() {
     )
 }
 
-export default Today
+export default Search

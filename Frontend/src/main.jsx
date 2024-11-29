@@ -9,6 +9,7 @@ import { TaskContextProvider } from './context/TaskContextProvider.jsx'
 import { UserContextProvider } from './context/UserContextProvider.jsx'
 import Login from './pages/Login.jsx'
 import SignUp from './pages/SignUp.jsx'
+import Search from './pages/Search.jsx'
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'signup',
         element: <SignUp />
+      },
+      {
+        path: 'search',
+        element: <Search />
       }
     ]
   }
