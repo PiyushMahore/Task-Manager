@@ -21,6 +21,8 @@ function App() {
         .then((user) => {
           if (user?.data._id) {
             navigate('/')
+          } else {
+            navigate('login')
           }
         })
     }
