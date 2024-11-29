@@ -8,7 +8,7 @@ const varifyJwt = asyncHandler(async (req, _, next) => {
         const token = req.cookies.refreshToken || req.header("Authorization")?.replace("Bearer ", "");
 
         if (!token) {
-            throw new apiError(404, "Unauthorized Token");
+            throw new apiError(404, "Unauthorise request")
         }
 
         const decodedToken = jwt.verify(token, process.env.REFRESH_TOKEN);

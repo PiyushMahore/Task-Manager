@@ -11,7 +11,7 @@ const addTask = asyncHandler(async (req, res) => {
         throw new apiError(400, "All Fields Are Required");
     }
 
-    const isTitleAlreadyExist = await Task.findOne({ title: title, userId: req.user._id })
+    const isTitleAlreadyExist = await Task.findOne({ $and: [{ title: title }, { userId: req.user._id }] })
 
     if (isTitleAlreadyExist) {
         throw new apiError(400, "Title Alreay Exist")

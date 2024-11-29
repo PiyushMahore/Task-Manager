@@ -5,9 +5,12 @@ import { IoAddCircle, IoCalendarOutline } from "react-icons/io5";
 import { GoInbox } from "react-icons/go";
 import { BsCalendarDate } from "react-icons/bs";
 import AddTask from './AddTask';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
+import { useUserAuth } from '../context/UserContextProvider';
 
 function Nav({ setNav }) {
+    const useAuth = useUserAuth()
+    const navigate = useNavigate()
     const [addTaskForm, setAddTaskForm] = useState(false)
 
     const toggleTaskForm = () => {
@@ -20,6 +23,13 @@ function Nav({ setNav }) {
         setUserMenu(!userMenu)
     }
 
+    const logOut = async () => {
+        useAuth.logOut()
+            .then(() => {
+                navigate("/login")
+            })
+    }
+
     return (
         <div className='w-full bg-[#fcfaf8] py-3 px-5 grid gap-4 justify-items-start'>
             <div className='w-full flex items-center justify-between'>
@@ -28,7 +38,7 @@ function Nav({ setNav }) {
                     <IoIosArrowForward className='rotate-90' />
                 </div>
                 <div className={`fixed w-full bg-white top-10 ${userMenu ? "flex" : "hidden"} flex-col justify-center items-center gap-2 py-4`}>
-                    <button className='bg-red-500 px-2 py-1 rounded text-[#fff] hover:bg-red-600'>Log Out</button>
+                    <button onClick={logOut} className='bg-red-500 px-2 py-1 rounded text-[#fff] hover:bg-red-600'>Log Out</button>
                 </div>
                 <div className='cursor-pointer'>
                     <PiSlidersLight onClick={() => setNav(false)} size={25} />
@@ -43,7 +53,7 @@ function Nav({ setNav }) {
                     <IoIosSearch size={20} />
                     <p>Search</p>
                 </NavLink>
-                <NavLink to='inbox' className={({ isActive }) => `w-full flex gap-2 cursor-pointer  px-1.5 py-1.5 rounded transition duration-200 ${isActive ? "bg-[#ffefe5] text-[#a81f00]" : "hover:bg-gray-100"}`}>
+                <NavLink to='/' className={({ isActive }) => `w-full flex gap-2 cursor-pointer  px-1.5 py-1.5 rounded transition duration-200 ${isActive ? "bg-[#ffefe5] text-[#a81f00]" : "hover:bg-gray-100"}`}>
                     <GoInbox size={20} />
                     <p>Inbox</p>
                 </NavLink>
